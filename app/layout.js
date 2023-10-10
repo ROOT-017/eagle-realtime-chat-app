@@ -13,6 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <link rel="icon" href="../assets/3d-fluency-falcon.png" />
       <body className={inter.className + "  flex flex-col"}>
         <ContextProvider>
           <Navbar />

@@ -12,6 +12,8 @@ const ChatId = (props) => {
     e.preventDefault();
   };
 
+  
+
   return (
     <div className="lg:w-2/3 w-full h-full p-2">
       <div className="h-full flex flex-col  w-full bg-space_cadet  rounded-lg">

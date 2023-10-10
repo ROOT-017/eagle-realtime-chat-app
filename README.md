@@ -1,3 +1,3 @@
 ## EAGL REALTIME CHAT APP 
-Is a simple realtime chat to chat with github users connected ton the platform.
+A simple realtime chat app to chat with github users connected on the platform.
 It was scaffold with Next js

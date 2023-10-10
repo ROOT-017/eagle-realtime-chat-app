@@ -4,7 +4,7 @@ import userImg from "../../assets/TERENCE.png";
 import { useRouter } from "next/navigation";
 import { data } from "@/utils/utils";
 import SearchUser from "@/components/searchUser";
-import { useEffect, useState, useContext, useCallback } from "react";
+import { useEffect, useContext, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Context from "@/store/contex";
 import { signIn } from "next-auth/react";
@@ -27,6 +27,8 @@ const Chatlayout = ({ children }) => {
       const res = await fetch(
         `https://api.github.com/search/users?q=${username}`
       );
+      console.log(res.ok);
+      if (!res.ok) return;
       const data = await res.json();
       // setActiveChat(data.items[0]);
       setActiveChat(data.items[0]);
@@ -95,9 +97,6 @@ const Chatlayout = ({ children }) => {
                 <span className="pr-2 text-white">10:05am</span>
               </li>
             </ul>
-            <div>
-              <button onClick={handleSignup}>Click Me</button>
-            </div>
           </div>
         </div>
 

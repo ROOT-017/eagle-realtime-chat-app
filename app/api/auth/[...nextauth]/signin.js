@@ -1,14 +1,32 @@
-const Signin = (props) => {
+import { getProviders, signIn } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
+export default function SignIn({ providers }) {
   return (
-    <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem alias cumque
-      illum doloribus obcaecati omnis quae veniam vero quaerat eveniet dolor
-      atque ex repudiandae hic adipisci debitis facilis deleniti, officiis
-      numquam. Temporibus, sunt recusandae, adipisci illo dolorum voluptatem
-      dignissimos inventore quisquam hic quam molestias et magni, porro
-      reprehenderit assumenda ducimus.
-    </div>
+    <>
+      <div>Sign Up</div>
+      {Object.values(providers).map((provider) => (
+        <div key={provider.name}>
+          <button onClick={() => signIn(provider.id)}>
+            Sign in with {provider.name}
+          </button>
+        </div>
+      ))}
+    </>
   );
-};
+}
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
 
-export default Signin;
+  // If the user is already logged in, redirect.
+  // Note: Make sure not to redirect to the same page
+  // To avoid an infinite loop!
+  if (session) {
+    return { redirect: { destination: "/" } };
+  }
+  const providers = await getProviders();
+
+  return {
+    props: { providers: providers ?? [] },
+  };
+}

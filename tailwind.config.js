@@ -39,6 +39,9 @@ module.exports = {
           900: "#cfd1e1",
         },
       },
+      fontFamily: {
+        sans: ["Roboto", "sans-serif"],
+      },
     },
   },
   plugins: [],

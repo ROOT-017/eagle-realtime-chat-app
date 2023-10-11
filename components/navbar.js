@@ -1,19 +1,18 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import profileImg from "../assets/TERENCE.png";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouter, usePathname } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import Context from "@/store/contex";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+
 const Navbar = (props) => {
   const { activeChat, signedUser, setSignedUser, setActiveChat } =
     useContext(Context);
-
   const router = useRouter();
   const path = usePathname();
-
+  const { data: session } = useSession();
   const handleBack = () => {
     router.back();
   };
@@ -22,16 +21,20 @@ const Navbar = (props) => {
     await signOut({ callbackUrl: "/signup", redirect: true });
     setSignedUser(null);
     setActiveChat(null);
-
-    // router.push("/signup");
   };
 
   useEffect(() => {
     if (path === "/") {
-      console.log(signedUser);
+      // console.log(signedUser);
       return;
     }
   }, [path, signedUser]);
+
+  useEffect(() => {
+    if (session) {
+      setSignedUser(session.user);
+    }
+  });
 
   return (
     <div className="text-white fixed h-16 lg:px-12 w-full px-4 justify-between bg-oxford-blue flex items-center">

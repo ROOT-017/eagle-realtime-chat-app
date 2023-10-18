@@ -20,9 +20,6 @@ export default function Home({ children }) {
     console.log(message);
   };
 
-  const openChat = () => {
-    router.push("/hfdkj");
-  };
 
   const handleChat = ({ value }) => {
     router.push("/" + value.id);

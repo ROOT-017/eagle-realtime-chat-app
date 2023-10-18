@@ -27,7 +27,6 @@ const Chatlayout = ({ children }) => {
       const res = await fetch(
         `https://api.github.com/search/users?q=${username}`
       );
-      console.log(res.ok);
       if (!res.ok) return;
       const data = await res.json();
       // setActiveChat(data.items[0]);

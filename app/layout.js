@@ -5,9 +5,18 @@ import NextAuthProvider from "./providers/sessionProvider";
 import { redirect } from "next/navigation";
 // import AblyWrapper from "./providers/ablyProvider";
 
+import { Roboto } from "next/font/google";
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import dynamic from "next/dynamic";
+import { useParams } from "next/navigation";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  display: "swap",
+  weight: "400",
+});
 
 export const metadata = {
   title: "EAGLE CHAT",
@@ -21,7 +30,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <link rel="icon" href="../assets/3d-fluency-falcon.png" />
-      <body className={"flex flex-col"}>
+      <body className={["flex flex-col ", roboto.className]}>
         <ContextProvider>
           <NextAuthProvider>
             <AblyWrapper>

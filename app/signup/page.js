@@ -1,25 +1,33 @@
 "use client";
 import { signIn, useSession } from "next-auth/react";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useCallback } from "react";
 import Context from "@/store/contex";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Eagle from "../assets/cherry-99.png";
+import { fetchData } from "next-auth/client/_utils";
 
 const Signup = (props) => {
   const { data } = useSession();
-  const { setSignedUser } = useContext(Context);
+  const { setSignedUser, setSignedUserObj } = useContext(Context);
   const router = useRouter();
 
   const handleSignup = () => {
     signIn();
   };
+  const fetchUserObj = useCallback(async (name) => {
+    const user = await fetch(`https://api.github.com/search/users?q=${name}`);
+
+    return user;
+  }, []);
 
   useEffect(() => {
     if (!data) return;
     setSignedUser(data.user);
+    const userObj = fetchUserObj(data.user.name);
+    setSignedUserObj(userObj);
     router.push("/");
-  }, [data, setSignedUser, router]);
+  }, [data, setSignedUser, router, setSignedUserObj, fetchUserObj]);
 
   return (
     <div className="  h-full bg-sm-abstract-bg  lg:bg-lg-abstract-bg bg-no-repeat bg-cover">

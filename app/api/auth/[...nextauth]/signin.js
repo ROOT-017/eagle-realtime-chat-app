@@ -24,9 +24,11 @@ export async function getServerSideProps(context) {
   if (session) {
     return { redirect: { destination: "/" } };
   }
-  const providers = await getProviders();
+  const providers = await getProviders(); 
 
   return {
-    props: { providers: providers ?? [] },
+    props: {
+      providers: providers ?? [],
+    },
   };
 }

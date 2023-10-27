@@ -25,7 +25,6 @@ const Navbar = (props) => {
 
   useEffect(() => {
     if (path === "/") {
-      // console.log(signedUser);
       return;
     }
   }, [path, signedUser]);

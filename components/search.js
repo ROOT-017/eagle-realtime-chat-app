@@ -1,6 +1,9 @@
 import { BiSearch } from "react-icons/bi";
 
 const Search = ({ setTerm }) => {
+  const elt = document.querySelector(".search_field");
+  // elt?.focus() ?null :  setTerm(null);
+
   return (
     <div className=" p-2 lg:p-0 lg:pb-2">
       <div className="flex p-2 justify-between items-center bg-white rounded-lg">
@@ -10,7 +13,7 @@ const Search = ({ setTerm }) => {
           placeholder="Search a github user"
           id="search"
           onChange={(e) => setTerm(e.target.value)}
-          className="w-full focus:outline-none h-10 "
+          className="w-full focus:outline-none h-10 search_field"
         />
         <label htmlFor="search">
           <BiSearch size={`2em`} className="ml-2v  text-oxford-blue" />

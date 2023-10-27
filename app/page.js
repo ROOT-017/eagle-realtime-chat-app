@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import userImg from "../assets/TERENCE.png";
+import userImg from "@/public/assets/TERENCE.png";
 import MessageTemplate from "@/components/message";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -11,15 +11,12 @@ import Spinder from "@/components/ui/spinder";
 import Link from "next/link";
 import SearchUser from "@/components/searchUser";
 
-
 export default function Home({ children }) {
   const [message, setMessage] = useState("");
   const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(message);
   };
-
 
   const handleChat = ({ value }) => {
     router.push("/" + value.id);
@@ -61,7 +58,7 @@ export default function Home({ children }) {
             <li
               key={e.id}
               onClick={handleChat.bind(null, { value: e })}
-              className="py-4 border-gray-300 border-b hover:text-white  flex justify-between bg-space_cadet pl-2 transition-colors ease-linear "
+              className="py-4 border-gray-300 border-b hover:text -white  flex justify-between bg-space_cadet pl-2 transition-colors ease-linear "
             >
               <Image
                 src={userImg}

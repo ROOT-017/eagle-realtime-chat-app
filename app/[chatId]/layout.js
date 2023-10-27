@@ -1,19 +1,19 @@
 "use client";
 import Image from "next/image";
-import userImg from "../../assets/TERENCE.png";
+import userImg from "@/public/assets/TERENCE.png";
 import { useRouter } from "next/navigation";
 import { data } from "@/utils/utils";
 import SearchUser from "@/components/searchUser";
 import { useEffect, useContext, useCallback } from "react";
-import { useParams } from "next/navigation";
 import Context from "@/store/contex";
 import { signIn } from "next-auth/react";
 
-const Chatlayout = ({ children }) => {
-  const { activeChat, setActiveChat } = useContext(Context);
+const Chatlayout = ({ children, params }) => {
+  const { activeChat, setActiveChat, setSignedUserObj, signedUser } =
+    useContext(Context);
   // const [activeChat, setActiveChat] = useState(null);
   const router = useRouter();
-  const { chatId } = useParams();
+  const { chatId } = params;
 
   const openChat = ({ value }) => {
     router.push(`/` + value);
@@ -22,14 +22,28 @@ const Chatlayout = ({ children }) => {
   const handleSignup = () => {
     signIn();
   };
+
+  const fetchUserObj = useCallback(
+    async (name) => {
+      const user = await fetch(`https://api.github.com/search/users?q=${name}`);
+      if (!user.ok) return;
+      const { items } = await user.json();
+
+      setSignedUserObj(items[0]);
+      return user;
+    },
+    [setSignedUserObj]
+  );
+
   const searchUser = useCallback(
     async (username) => {
       const res = await fetch(
         `https://api.github.com/search/users?q=${username}`
       );
-      if (!res.ok) return;
+      if (!res.ok)
+        throw new Error(`Fail to load ${username} , check internet connection`);
+
       const data = await res.json();
-      // setActiveChat(data.items[0]);
       setActiveChat(data.items[0]);
       return data;
     },
@@ -39,6 +53,12 @@ const Chatlayout = ({ children }) => {
   useEffect(() => {
     searchUser(chatId);
   }, [chatId, searchUser]);
+
+  useEffect(() => {
+    console.log("userObj");
+    if (!signedUser) return;
+    fetchUserObj(signedUser.name);
+  }, [signedUser, fetchUserObj, setSignedUserObj]);
 
   return (
     <>

@@ -4,8 +4,10 @@ import React, { useState } from "react";
 const Context = React.createContext({
   signedUser: null,
   setSignedUser: (user) => {},
+  setSignedUserObj: (name) => {},
   activeChat: null,
   setActiveChat: (user) => {},
+  signedUserObj: null,
 });
 const testSignedUser = {
   login: "ROOT-017",
@@ -31,6 +33,7 @@ const testSignedUser = {
 export const ContextProvider = ({ children }) => {
   const [activeChat, setActiveChat] = useState(null);
   const [signedUser, setSignedUser] = useState(null);
+  const [signedUserObj, setSignedUserObj] = useState(null);
 
   return (
     <Context.Provider
@@ -39,6 +42,8 @@ export const ContextProvider = ({ children }) => {
         setActiveChat,
         signedUser,
         setSignedUser,
+        setSignedUserObj,
+        signedUserObj,
       }}
     >
       {children}

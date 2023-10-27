@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Search from "./search";
 import Spinder from "./ui/spinder";
-import userImg from "../assets/TERENCE.png";
+import userImg from "@/public/assets/TERENCE.png";
 import MessageTemplate from "@/components/message";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,6 @@ const SearchUser = ({ handleActiveChat }) => {
     const data = await res.json();
 
     if (data.items.length > 0) {
-      console.log(data.items);
       setSearchResult(data.items.slice(0, 5));
     } else {
       setSearchResult(null);

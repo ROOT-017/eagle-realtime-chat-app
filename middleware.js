@@ -1,10 +1,3 @@
-// export { default } from "next-auth/middleware"
-
-// export const config = {
-//   // matcher: ["/profile"],
-//   // matcher: ["/((?!register|api|signup).*)"],
-// };
-
 import { NextRequest, NextResponse } from "next/server";
 
 export const middleware = (req, res) => {
@@ -20,9 +13,9 @@ export const middleware = (req, res) => {
   if (!isPublicPath && !isAuthenticated) {
     return NextResponse.redirect(new URL("/signup", req.nextUrl.origin));
   }
-  // if (!isPublicPath && isAuthenticated) {
-  //   return NextResponse.next();
-  // }
+  if (!isPublicPath && isAuthenticated) {
+    return NextResponse.next();
+  }
 };
 
 export const config = {
